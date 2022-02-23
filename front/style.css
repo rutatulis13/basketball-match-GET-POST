@@ -1,0 +1,352 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+main{
+    position: relative;  
+}
+/* #naujas-macas{
+    display: none;
+} */
+.container{
+    object-fit: cover;
+}
+
+.container__image--background{
+    height: 90vh;
+    width: 100vw;
+    object-fit:cover;
+    object-position: 90% 30%;
+}
+
+.img-team1, .img-team2{
+    height: auto;
+    width: 20vh;
+}
+
+.container__info{
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50vw;
+    height: 5vh;
+    background-color: rgb(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+.container__info--details{
+    color: white;
+}
+
+.green-font{
+    color: rgb(70, 170, 170);
+}
+
+.container__info--teams{
+    font-size: 20px;
+    color: white;
+}
+.container__info--dot, .container__info--dot-last {
+    height: 5px;
+    width: 5px;
+    background-color: white;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+.container__content{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center; 
+    display: flex;
+    align-items: center;
+
+}
+.contaner__scores-final{
+    text-align: center; 
+    display: flex;
+    flex-direction: column;
+    margin: 0 10em;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.container__final{
+    width: 8rem;
+    height: 2em;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    border-radius: 0 0 10px 10px;
+    background-color: #fff;
+}
+
+.container__scores{
+    min-width: 20em;
+    height: 10em;
+    background-color: black;
+    border-radius: 0.5em;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+    padding: 0 0.5em;
+}
+
+.container__scores--first{
+    padding-right: 0.2em;
+}
+
+.container__scores--second{
+    padding-left: 0.2em;
+}
+
+.container__scores--first, .container__scores--second{
+    font-size: 7em;
+}
+
+.container__scores--border{
+    border-left:2px solid rgb(214, 212, 212);
+    height: 10vh;
+    align-items: center;
+    text-align: center;
+}
+
+.container__image {
+    position: relative;
+    height: 90vh;
+}
+
+.container__image:before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; top: 0; 
+    border-bottom: 90vh solid transparent;
+    border-left: 12vw solid #d0041f;
+    width: 0;
+}
+
+.container__image:after{
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0; top: 0; 
+    border-top: 90vh solid transparent;
+    border-right: 12vw solid #002d73;
+    width: 0;
+}
+
+.btn{
+    position: absolute;
+    bottom: 8%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius:0.5em;
+    background-color: transparent;
+    border:1px solid rgb(214, 212, 212);
+    width: 10rem;
+    height: 2.8em;
+    color: rgb(214, 212, 212);
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 970px) {
+    .img-team1, .img-team2{
+        width: 13vh;
+    }
+    .contaner__scores-final{
+        margin: 0 5em;
+    }
+    .container__info{
+        width: 100vw;
+    }
+  }
+
+  @media only screen and (max-width: 700px) {
+    .container__scores{
+    min-width: 15em;
+    height: 6em;
+    }
+    .container__scores--first, .container__scores--second{
+        font-size: 80px;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    .contaner__scores-final{
+        margin: 0 2em;
+    }
+  }
+
+@media only screen and (max-width: 510px) {
+    .container__content{
+        flex-direction: column;
+    }
+
+    .contaner__scores-final{
+        margin: 2em 10em;
+    }
+
+    .container__info{
+        height: 10em;
+    }
+
+    .btn{
+        bottom: 5%;
+    }
+  }
+
+@media only screen and (max-width: 400px) {
+  .container__info--dot-last {
+    margin-right: 5px;
+  }
+
+  .time{
+      margin-right: 10px;
+  }
+  
+}
+
+#naujas-macas{
+    display: none;
+}
+
+.matches{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    margin: auto;
+
+}
+
+.matches_info{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    margin: auto;
+}
+
+.list{
+    list-style: none;
+    padding-bottom: 10px;
+    border-bottom: 1px solid grey;
+    border-width: 100%;
+}
+
+.reg-match-btn{
+    display: flex;
+    margin: auto;
+    width: 100%;
+    text-align: center;
+    align-items: center;
+    margin: auto;
+}
+
+#reg-match{
+    text-align: center;
+    align-items: center;
+    margin: 20px auto 20px auto;
+    width: 18em;
+    height: 4em;
+    background-color: #d0041f;
+    border-radius: 10px;
+    text-transform: uppercase;
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 0.9em;
+}
+
+.naujas-macas{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    margin: auto;
+}
+
+#naujas-macas-btn{
+    display: flex;
+    flex-direction: row;
+}
+
+input{
+    border: 2px solid grey;
+    border-radius: 10px;
+    width: 10em;
+    height: 3em;
+    padding: 5px;
+    text-align: center;
+}
+.input{
+    border: 2px solid #d0041f;
+    background-color: #f78191;
+    width: 100px;
+    height: 100px;
+}
+
+.error {
+    position: relative;
+    animation: shake .1s linear;
+    animation-iteration-count: 3;
+}
+
+@keyframes shake {
+    0% { left: -5px; }
+    100% { right: -5px; }
+}
+
+#save-match:hover, #get-match:hover, #reg-match:hover{
+    background-color: rgb(70, 170, 170);
+    color: #fff;
+    cursor:pointer;
+}
+#save-match, #get-match{
+    margin: 20px auto 20px auto;
+    width: 10em;
+    height: 3em;
+    background-color: #d0041f;
+    display: none;
+}
+#save-match{
+    margin-right: 10px;
+}
+
+button{
+    cursor: pointer;
+    text-align: center;
+    align-items: center;
+    border-radius: 10px;
+    text-transform: uppercase;
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 0.9em;
+    border: none;
+}
+.matches__btn--change{
+    width: 8em;
+    height: 35px;
+    background-color: rgb(70, 170, 170);
+    color: #fff;
+    font-size: 0.8em;
+}
+
+.matches__btn--delete{
+    width: 8em;
+    height: 35px;
+    background-color: #d0041f;
+    font-size: 0.8em;
+}
+

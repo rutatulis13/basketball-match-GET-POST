@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Dosis:wght@600&family=Josefin+Sans:wght@100&family=Lato:wght@700&family=Poppins:wght@100;300;400;700;900&family=Raleway:wght@500;900&family=Teko:wght@300&family=Titillium+Web:wght@600&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <main>
+        <div class="container">
+            <div class="container__image">
+                <img class="container__image--background" src="6780db32-f61b-431c-b269-069b1f16b45e.webp"/>
+            </div>
+            <div class="container__info"></div>
+            <div class="container__content">
+                <div class="container__team1">
+                    <img class="img-team1" src='http://localhost:3003/images/olymp.png'/>
+                </div>
+                <div class="contaner__scores-final">
+                    <div class="container__scores"></div>
+                    <div class="quarter"></div>
+                </div>
+                <div class="container__team2">
+                    <img class="img-team2" src='http://localhost:3003/images/anadolu.svg'/>
+                </div>
+            </div>
+                  
+        </div>
+        <button type="button" class="btn">Renew data</button>  
+    </main>
+    <sidebar>
+        <div class="reg-match-btn">
+            <button type="submit" id="reg-match">registruoti rungtynes</button>
+        </div> 
+        <div class="check-database"></div>
+       
+            <form id="naujas-macas" class="naujas-macas">
+                <div id="naujas-macas-input">
+                    <input type="date" name="date" id="date" class="input-test" required />
+                    <input type="text" name="round" placeholder="round" id="round" class="input-test" required />
+                    <input type="text" name="stadium" placeholder="stadium" id="stadium" class="input-test" required />
+                    <input type="time" name="time" id="time" class="input-test" required />
+                    <input type="text" name="team1" placeholder="first team" id="team1" class="input-test" required />
+                    <input type="text" name="team2" placeholder="second team" id="team2" class="input-test" required />
+                </div>
+            </form>
+                <div id="naujas-macas-btn">
+                    <button type="submit" id="save-match">išsaugoti</button>
+                    <button type="submit" id="get-match">registruoti</button>
+                </div>
+            
+        </div>
+
+        <div class="zinute"></div>
+    <div class="matches__info">
+        <div class="matches"></div>
+    </div>   
+    </sidebar>
+    <script src="index.js"></script>
+</body>
+</html>
