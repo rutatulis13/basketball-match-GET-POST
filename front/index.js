@@ -60,34 +60,60 @@ document.querySelector("#save-match").addEventListener('click', () => {
     let team1 = document.getElementById('team1').value;
     let team2 = document.getElementById('team2').value;
 
-    let arr = []
-    arr.push(data, round, stadium, time, team1, team2);
-    const checkEmptyValues = arr.map(item => { //??????
-        if (item === "") {
-            console.log("item reiksme" + item)
-            // alert("Please Fill All Required Field"); 
-            document.querySelector(".input-test").classList.add("input");
-            // return false;
-            // `<div class="input"> ${item} </div>`
-            // return document.querySelector(".input-test").classList.add("input");
-           
-            }
+    let isValid = true;
+    let inputs = document.getElementsByTagName('input');
+    // let message = document.getElementsByClassName("input-test").classList.add("input");
+    let message = document.getElementsByClassName('alert');
+    let index;
+
+    for (index = 0; index < inputs.length; ++index) {
+        let currentInputValue = inputs[index].value;
+        if (currentInputValue == null || currentInputValue === "") {
+            message[index].style.display = "block";
+            isValid = false;
         }
 
-    )
+        isValid = true;
+        fetch('http://localhost:3003/save-request', {
+            method: 'POST',
+             headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({data, round, stadium, time, team1, team2})
+            })
+            .then(resp => resp.json())
+            .then(resp => {
+            console.log(resp + "padavimas i duomenu baze")
+            })
+    }
+
+    // let arr = []
+    // arr.push(data, round, stadium, time, team1, team2);
+    // const checkEmptyValues = arr.find(item => { //??????
+    //     if (item.value === "") {
+    //                     alert("Please Fill All Required Field"); 
+    //                     console.log(item);
+    //                     // document.getElementById({item}).classList.add("input")
+    //                     // document.querySelector(".input-test").classList.add("input");
+    //                     return false;
+    //                     // `<div class="input"> ${item} </div>`
+    //                     // return document.querySelector(".input-test").classList.add("input");
+    //     } else {
+    //         fetch('http://localhost:3003/save-request', {
+    //         method: 'POST',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify({dataVal, roundVal, stadiumVal, timeVal, team1Val, team2Val})
+    //         })
+    //         .then(resp => resp.json())
+    //         .then(resp => {
+    //             console.log(resp + "padavimas i duomenu baze")
+    //         })
+           
+    //         }
+    //     }
+
+    // )
 
     //apink fetch if empty values
     //
-
-    fetch('http://localhost:3003/save-request', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({data, round, stadium, time, team1, team2})
-    })
-    .then(resp => resp.json())
-    .then(resp => {
-        console.log(resp)
-    })
 
     document.getElementById('date').value = "";
         document.getElementById('round').value = "";

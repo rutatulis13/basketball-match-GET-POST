@@ -87,14 +87,42 @@ app.get('/result', function (req, res) {
   })
 
   app.post('/save-request', (req, res) => { //sukurem db folderyje faila
-    fs.writeFile(filePath, JSON.stringify(req.body), 'utf8', (err) => {
-      if(!err) {
-        res.json('informacija issaugota')
-        //pabandyti naudoti appendFile !!!
+    let masyvas = []
+
+    fs.access(filePath, (err) => {
+
+      if(err) {
+        masyvas.push(req.body)
+        fs.writeFile(filePath, JSON.stringify(masyvas), 'utf8', (err) => {
+          if(!err) {
+            res.json({message: 'Informacija issaugota'})
+          } else {
+            res.json({message: 'Nepavyko sukurti failo'})
+          }
+        })
+
       } else {
-        res.json('nepavyko sukurti failo')
+        //readFile tikrina,ar gavau err
+        fs.readFile(filePath, 'utf8', (err, data) => {
+          if(err) {
+            res.json({message: 'Ivyko klaida'})
+            return false
+          }
+          let json = JSON.parse(data)
+          json.push(req.body)
+  
+          fs.writeFile(filePath, JSON.stringify(json), 'utf8', (err) => {
+            if(!err) {
+              res.json({message: 'Informacija issaugota'})
+            } else {
+              res.json({message: 'Nepavyko sukurti failo'})
+            }
+          })
+        })
       }
+  
     })
+  
   })
 
   app.get("/get-match", (req, res) => {
