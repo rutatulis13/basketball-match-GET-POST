@@ -1,5 +1,5 @@
 // const express = require('express')
-import express from "express"
+import express, { json } from "express"
 import cors from 'cors'
 const app = express()
 // import { writeFile as wf, readFile, stat } from "fs" //filesystem biblioteka
@@ -88,12 +88,16 @@ app.get('/result', function (req, res) {
 
   app.post('/save-request', (req, res) => { //sukurem db folderyje faila
     let masyvas = []
-
+    //tikrinam, kad failas egzistuoja
     fs.access(filePath, (err) => {
-
+      //tikrinam, ar egzistuoja
       if(err) {
+        req.body.id = 0;
+        //jeigu neegzistuoja, tuomet supushinam body i tuscia masyva
         masyvas.push(req.body)
+        //tuomet idedam info
         fs.writeFile(filePath, JSON.stringify(masyvas), 'utf8', (err) => {
+          //jeigu nera erroro
           if(!err) {
             res.json({message: 'Informacija issaugota'})
           } else {
@@ -102,15 +106,23 @@ app.get('/result', function (req, res) {
         })
 
       } else {
-        //readFile tikrina,ar gavau err
+        //jeigu failas egzistuoja...
         fs.readFile(filePath, 'utf8', (err, data) => {
+          //tikrinam, ar apskritai klaidu kokiu nera, ar pasiekiam info
           if(err) {
             res.json({message: 'Ivyko klaida'})
             return false
           }
+          //jei nera eroru, tuomet supushinam json fomratu oaversta info
           let json = JSON.parse(data)
+
+          if (json.length == 0) 
+          req.body.id = 0
+          else
+          req.body.id = json[json.length - 1].id + 1
+
           json.push(req.body)
-  
+          //perduodam zinute
           fs.writeFile(filePath, JSON.stringify(json), 'utf8', (err) => {
             if(!err) {
               res.json({message: 'Informacija issaugota'})
@@ -132,6 +144,8 @@ app.get('/result', function (req, res) {
 
       let info = JSON.parse(data)
 
+      // info.forEach(val, key);
+
       res.json(info)
     })
   })
@@ -144,5 +158,60 @@ app.get('/result', function (req, res) {
       res.json({result: "Duomenu baze yra"})
     })
   })
+
+app.get('/change-match/:id', (req, res) => {
+  let id = req.params.id
+
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+    res.json({status: "failed", message: "Nepavyko perskaityti failo"})
+    return false
+    } 
+
+      let json = JSON.parse(data)
+      let found = false;
+      
+      json.forEach((el, index) => {
+        if(el.id == id ) {
+          res.json({status: "success", message: "pavyko", jsonResp: el})
+          found = true
+        } 
+      })
+      if(!found)
+      res.json ({status: "failed", message: "nepavyko"})
+  })
+})
+
+  //su post metodu mes irasome info, su put metodu redaguojame
+
+  // let jsonResp = JSOPN.stringify(json)
+
+  app.delete("/:id", (req, res) => {
+    let id = req.params.id;
+    fs.readFile(filePath, 'utf8', (err, data) => {
+      if (err) {
+      res.json({status: "failed", message: "Nepavyko perskaityti failo"})
+      return false
+      } else {
+        let info = JSON.parse(data)
+        let findIndex = info.find(index => index.id === parseInt(id) )
+        console.log(info)
+        info.splice(info.indexOf(findIndex), 1)
+
+        if (json.length == 0) {
+          fs.unlink(filePath, err => {
+            if (err) 
+            res.json({status: "failed", message: "nepavyko"})
+          })
+        }
+
+        fs.writeFile(filePath, JSON.stringify(info), 'utf8', (err) => {
+          if (err) throw err;
+          console.log("JSON file successfuly saved");
+        })
+        res.json( info )
+      }
+  })
+})
 
 app.listen(3003)
