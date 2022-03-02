@@ -124,22 +124,22 @@ document.querySelector("#save-match").addEventListener('click', () => {
 })
 
 
-const getRez = () => {
-    fetch('http://localhost:3003/result')
-    .then((response) => response.json())
-    .then(jsonObjektas => {
-        console.log(jsonObjektas)
-        function getRandomNum(min, max) {
-            let randomNum = Math.floor(Math.random()*(max-min+1)+min);
-            return randomNum;
-      }
-    
-        let status = getRandomNum(0, 4);
+	const getRez = () => {
+		fetch('http://localhost:3003/result')
+		.then((response) => response.json())
+		.then(jsonObjektas => {
+			console.log(jsonObjektas)
+			function getRandomNum(min, max) {
+				let randomNum = Math.floor(Math.random()*(max-min+1)+min);
+				return randomNum;
+		  }
+		
+			let status = getRandomNum(0, 4);
 
-        document.querySelector(".quarter").innerHTML += `
-        <div class="container__final">${jsonObjektas.half[status]}</div>`
-        })
-    }
+			document.querySelector(".quarter").innerHTML += `
+			<div class="container__final">${jsonObjektas.half[status]}</div>`
+			})
+	}
 
     getRez();
 
@@ -165,117 +165,161 @@ const getRez = () => {
         fetch('http://localhost:3003/get-match')
         .then(resp => resp.json())
         .then(resp => {
-            console.log(resp)
-
-    // const displayList = (resp) => {
-            document.querySelector(".matches").innerHTML = "";
-            resp.forEach(item => {
-            document.querySelector(".matches").innerHTML += 
-            `<ul class="list">
-                <li>
-                    <span>${item.team1} vs ${item.team2}</span>
-                    <span>${item.data} ${item.time}</span>
-                    <span>Round ${item.round}</span>
-                    <a href="${item.id}">${item.id}</a>
-                </li>  
-            <ul>
-            <div class="btns">
-                <button class="matches__btn--change" type="button">Redaguoti</button>
-                <button class="matches__btn--delete" data-id="${item.id}" type="button">Ištrinti</button>
-            </div>
-            `
+            displayList(resp)
         })
         
+    })
 
-        document.querySelectorAll(".matches__btn--delete").forEach(val => {
-            val.addEventListener("click", (event) => {
-                console.log("hello")
-                event.preventDefault()
-    
-                let id = val.getAttribute("data-id")
-    
-                fetch('http://localhost:3003/' + id, {
-                    method: 'DELETE'
-                    })
-    
-                .then(resp => resp.json())
-                .then(resp => {
-                    
-                    // if (resp.status == 'success')
-                    // displayList(JSON.parse(resp.jsonResp))
-                    document.querySelector(".matches").innerHTML = "";
-                    resp.forEach(item => {
-                    document.querySelectorAll(".matches").innerHTML += 
-                    `<ul class="list">
-                        <li>
-                            <span>${item.team1} vs ${item.team2}</span>
-                            <span>${item.data} ${item.time}</span>
-                            <span>Round ${item.round}</span>
-                            <a href="${item.id}">${item.id}</a>
-                        </li>  
-                    <ul>
-                    <div class="btns">
-                        <button class="matches__btn--change" type="button">Redaguoti</button>
-                        <button class="matches__btn--delete" data-id="${item.id}" type="button">Ištrinti</button>
-                    </div>
-                    `
-                })
+
+
+	function displayList(resp) {
+		
+		document.querySelector(".matches").innerHTML = ''
+		
+		resp.forEach(item => {
+			document.querySelector(".matches").innerHTML += 
+				`<ul class="list">
+					<li>
+						<span>${item.team1} vs ${item.team2}</span>
+						<span>${item.data} ${item.time}</span>
+						<span>Round ${item.round}</span>
+						<a href="${item.id}">${item.id}</a>
+					</li>  
+				<ul>
+				<div class="btns">
+					<button class="matches__btn--change" type="button">Redaguoti</button>
+					<button class="matches__btn--delete" data-id="${item.id}" type="button">Ištrinti</button>
+				</div>
+				`
+				
+		})	
+		
+		document.querySelectorAll(".matches__btn--delete").forEach(val => {
+			
+			val.addEventListener("click", (event) => {
+
+				event.preventDefault()
+
+				let id = val.getAttribute("data-id")
+
+				fetch('http://localhost:3003/' + id, {
+					method: 'DELETE'
+				})
+				.then(resp => resp.json())
+				.then(resp => {
+					
+					displayList(resp)
+			
+				})
+				
+			})
+		
+		})
+
+        //redaguojam duomenis
+
+        // document.querySelector('#reg-match').addEventListener('click', () => {
+        //     document.querySelector('#naujas-macas').style.display = 'block'
+        // })
+
+        document.querySelector('#get-match').addEventListener('click', (event) => {
+            event.preventDefault()
+
+            if(document.querySelector('#date').value === '') {
+                console.log('Ivesta tuscia reiksme')
+                return
+            }
+
+            if(document.querySelector('#round').value === '') {
+                console.log('Ivesta tuscia reiksme')
+                return
+            }
+
+            if(document.querySelector('#stadium"').value === '') {
+                console.log('Ivesta tuscia reiksme')
+                return
+            }
+
+            if(document.querySelector('#time').value === '') {
+                console.log('Ivesta tuscia reiksme')
+                return
+            }
+
+            if(document.querySelector('#team1').value === '') {
+                console.log('Ivesta tuscia reiksme')
+                return
+            }
+
+            if(document.querySelector('#team2').value === '') {
+                console.log('Ivesta tuscia reiksme')
+                return
+            }
+            
+
+            let info = {
+                data : document.querySelector('#date').value,
+                kelinys : document.querySelector('#round').value,
+                stadionas : document.querySelector('#stadium').value,
+                laikas : document.querySelector('#time').value,
+                pirmaKomanda : document.querySelector('#team1').value,
+                antraKomanda : document.querySelector('#team2').value
+            }
+
+            document.querySelector('#date').value = ''
+            document.querySelector('#round').value = ''
+            document.querySelector('#stadium').value = ''
+            document.querySelector('#time').value = ''
+            document.querySelector('#team1').value = ''
+            document.querySelector('#team2').value = ''
+            
+            let mode = document.querySelector('#naujas-macas').getAttribute('data-mode')
+            let method = 'POST'
+            let id = ''
+
+            if(mode == 'edit') {
+                method = 'PUT'
+                id = document.querySelector('#naujas-macas').getAttribute('data-id')
+            }
+
+            fetch('http://localhost:3003/save-request/' + id, {
+                method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(info)
             })
-           
-                fetch('http://localhost:3003/get-match')
-                .then(resp => resp.json())
-                .then(resp => {
-                    console.log(resp)
-                    // displayList(resp)
-                    document.querySelector(".matches").innerHTML = "";
-                    resp.forEach(item => {
-                    document.querySelectorAll(".matches").innerHTML += 
-                    `<ul class="list">
-                        <li>
-                            <span>${item.team1} vs ${item.team2}</span>
-                            <span>${item.data} ${item.time}</span>
-                            <span>Round ${item.round}</span>
-                            <a href="${item.id}">${item.id}</a>
-                        </li>  
-                    <ul>
-                    <div class="btns">
-                        <button class="matches__btn--change" type="button">Redaguoti</button>
-                        <button class="matches__btn--delete" data-id="${item.id}" type="button">Ištrinti</button>
-                    </div>
-                    `
-                })
+            .then(resp => resp.json())
+            .then(resp => {
+                console.log(resp)
+                if(resp.status == 'success')
+                    displayList(JSON.parse(resp.jsonResp))
             })
-
-      
-
         })
-    })
+		
+		document.querySelectorAll(".matches__btn--change").forEach(val => {
 
+			val.addEventListener("click", (event) => {
+				console.log("hello")
+				event.preventDefault()
 
-        document.querySelectorAll(".matches__btn--change").forEach(val => {
+				let id = val.getAttribute("data-id")
 
-            val.addEventListener("click", (event) => {
-                console.log("hello")
-                event.preventDefault()
-    
-                let id = val.getAttribute("data-id")
-    
-                fetch('http://localhost:3003/change-match/' + id)
-    
-                .then(resp => resp.json())
-                .then(resp => {
-                    console.log(resp)
-                })
-            })
-        })           
+				fetch('http://localhost:3003/change-match/' + id)
 
-    })
-})
-  
+				.then(resp => resp.json())
+				.then(resp => {
+					console.log(resp)
+                    if (resp.status == "success") {
+                        document.querySelector('#naujas-macas').style.display = 'block'
+                        document.querySelector('#naujas-macas').setAttribute('data-mode', 'edit')
+                        document.querySelector('#naujas-macas').setAttribute('data-id', id)
+                        document.querySelector('#date').value = resp.jsonResp.date
+                        document.querySelector('#round').value = resp.jsonResp.round
+                        document.querySelector('#stadium').value = resp.jsonResp.stadium
+                        document.querySelector('#time').value = resp.jsonResp.time
+                        document.querySelector('#team1').value = resp.jsonResp.team1
+                        document.querySelector('#team2').value = resp.jsonResp.team2
+                    }
+				})
+			})
+		})           
 
-
-    
-
-
-
-   
+	}

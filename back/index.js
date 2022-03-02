@@ -137,6 +137,10 @@ app.get('/result', function (req, res) {
   
   })
 
+    //redaguojam duomenis
+
+
+
   app.get("/get-match", (req, res) => {
     fs.readFile(filePath, 'utf8', (err, data) => {
       if (err)
@@ -159,6 +163,37 @@ app.get('/result', function (req, res) {
     })
   })
 
+  app.put('/save-request/:id', (req, res) => {
+    let id = req.params.id
+  
+    fs.readFile(filePath, 'utf8', (err, data) => {
+      if(err) {
+        res.json({ status: 'failed', message: 'Nepavyko perskaityti failo'})
+        return false
+      }
+  
+      let json = JSON.parse(data)
+  
+      json.forEach((el, index) => {
+        if(el.id == id) {
+          json[index].pavadinimas = req.body.pavadinimas
+          json[index].data = req.body.data
+        } 
+      })
+  
+      let jsonResp = JSON.stringify(json)
+  
+      fs.writeFile(filePath, jsonResp, 'utf8', (err) => {
+        if(!err) {
+          res.json({status: 'success', message: 'Informacija issaugota', jsonResp})
+        } else {
+          res.json({status: 'failed', message: 'Nepavyko sukurti failo'})
+        }
+      })
+      
+    })
+  })
+  
 app.get('/change-match/:id', (req, res) => {
   let id = req.params.id
 
@@ -181,7 +216,6 @@ app.get('/change-match/:id', (req, res) => {
       res.json ({status: "failed", message: "nepavyko"})
   })
 })
-
   //su post metodu mes irasome info, su put metodu redaguojame
 
   // let jsonResp = JSOPN.stringify(json)
