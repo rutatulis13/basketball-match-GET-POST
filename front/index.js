@@ -187,7 +187,7 @@ document.querySelector("#save-match").addEventListener('click', () => {
 					</li>  
 				<ul>
 				<div class="btns">
-					<button class="matches__btn--change" type="button">Redaguoti</button>
+					<button class="matches__btn--change" data-id="${item.id}" type="button">Redaguoti</button>
 					<button class="matches__btn--delete" data-id="${item.id}" type="button">Ištrinti</button>
 				</div>
 				`
@@ -222,7 +222,7 @@ document.querySelector("#save-match").addEventListener('click', () => {
         //     document.querySelector('#naujas-macas').style.display = 'block'
         // })
 
-        document.querySelector('#get-match').addEventListener('click', (event) => {
+        document.querySelector('.matches__btn--change').addEventListener('click', (event) => {
             event.preventDefault()
 
             if(document.querySelector('#date').value === '') {
