@@ -222,7 +222,7 @@ document.querySelector("#save-match").addEventListener('click', () => {
         //     document.querySelector('#naujas-macas').style.display = 'block'
         // })
 
-        document.querySelector('.matches__btn--change').addEventListener('click', (event) => {
+        document.querySelector('#get-match').addEventListener('click', (event) => {
             event.preventDefault()
 
             if(document.querySelector('#date').value === '') {
